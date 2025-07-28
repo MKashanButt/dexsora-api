@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TableSchema extends Model
 {
-    protected $table = "scehmas";
+    protected $table = "schemas";
 
     protected $fillable = [
         "slug",
@@ -15,15 +15,17 @@ class TableSchema extends Model
         "user_id",
     ];
 
-    protected function casts()
-    {
-        return [
-            "schema" => "json",
-        ];
-    }
+    protected $casts = [
+        'schema' => 'array',
+    ];
 
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function data(): HasMany
+    {
+        return $this->hasMany(Data::class);
     }
 }
