@@ -28,7 +28,7 @@ class CreateSchemaRequest extends FormRequest
     {
         return [
             "slug" => ["nullable", "string", "max:254", "unique:schemas,slug"],
-            "schema" => ["nullable", "json"],
+            "schema" => ["nullable", "array"],
         ];
     }
 
