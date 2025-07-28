@@ -6,10 +6,7 @@ use App\Http\Requests\CreateSchemaRequest;
 use App\Models\TableSchema;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
 
 class TableSchemaController extends Controller
 {
@@ -21,7 +18,7 @@ class TableSchemaController extends Controller
             return response()->json([
                 "status" => "success",
                 "data" => $schemas
-            ]);
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "error",
@@ -33,13 +30,10 @@ class TableSchemaController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function show(int $id): JsonResponse
     {
-        $validatedRequest = $request->validate([
-            "id" => ["required", "integer", "exists:schemas,id"]
-        ]);
         try {
-            $schema = Schema::where("id", $validatedRequest["id"])
+            $schema = TableSchema::where("id", $id)
                 ->where("user_id", Auth::id())
                 ->firstOrFail();
 
