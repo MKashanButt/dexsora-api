@@ -10,6 +10,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('/csrf-token', function () {
+    return response()->json([
+        'csrf_token' => csrf_token()
+    ])->header('Access-Control-Allow-Origin', 'http://localhost:3000')
+        ->header('Access-Control-Allow-Credentials', 'true');
+});
+
 Route::prefix("v1")
     ->group(function () {
         Route::post('/register', [UserController::class, 'register'])
