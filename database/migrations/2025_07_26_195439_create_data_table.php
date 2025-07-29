@@ -16,7 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->constrained("users")
                 ->cascadeOnDelete();
-            $table->$table->timestamps();
+            $table->json("data")
+                ->nullable();
+            $table->foreignId("schema_id")
+                ->constrained("schemas")
+                ->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
